@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h1= title
+  if (!user)
+    p You must be logged in to access this page.  Please follow one of the links below:
+    p
+      a(href="/") Homepage 
+    p
+      a(href="/login") Login
+    p
+      a(href="register") Create an account
+  if (user)
+    p Welcome, #{user.username} to the #{title} game page!
+    form(action='/game' method="post")
+      input(type="submit" name="playerChoice" value="Rock" id="Rock")
+      input(type="submit" name="playerChoice" value="Paper" id="Paper")
+      input(type="submit" name="playerChoice" value="Scissors" id="Scissors")
+    div
+      p(id="result")
+    div
+      table(class="scoreboard")
+        tr(class="scoreboard")
+          th(class="scoreboard") Player Score:
+          th(class="scoreboard") Computer Score:
+        tr(class="scoreboard")
+          td(class="scoreboard" id="playerScore") 0
+          td(class="scoreboard" id="computerScore") 0
+
+    p
+      a(href='/stats') See your stats!
+    p
+      a(href='/logout') Logout
+
+    script(type="text/javascript" src="/javascripts/application.js")

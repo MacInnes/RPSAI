@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  if (!user)
+    p You must be logged in to access this page.  Please follow one of the links below:
+    p
+      a(href="/") Homepage 
+    p
+      a(href="/login") Login
+    p
+      a(href="register") Create an account
+  if (user)
+    p Welcome to your stats page, #{user.username}!
+    p
+      a(href="/game") Play again
+    p
+      a(href="/logout") Logout

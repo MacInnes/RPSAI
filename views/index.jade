@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  if (!user)
+    h1 Welcome to Rock Paper Scissors!  
+    h4 Please Login or Register a new account:
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    h1 Welcome to Rock Paper Scissors!
+    p You are currently logged in as #{user.username}
+    p
+      a(href="/game") Play Rock Paper Scissors
+    p
+      a(href="/stats") See your stats
+    p
+      a(href="/logout") Logout
