@@ -5,18 +5,20 @@ var result = document.getElementById("result");
 var playerScore = document.getElementById("playerScore");
 var computerScore = document.getElementById("computerScore");
 var userChoice;
-var cpuChoice = "Paper";
+var cpuChoice;
 var method;
 
 
 
 rockBtn.addEventListener("click", function(){
   userChoice = "Rock";
-  winner(userChoice, cpuChoice);
+  winner(userChoice, cpuChoice); // may need to move winner function to server side as well
+  
   $.ajax({
     url: '/game',
     method: 'post',
-    data: {hands: [userChoice, cpuChoice]},
+    data: {userChoice: userChoice, //may need to exclude the cpuChoice here, since it'll be built server side
+      cpuChoice: cpuChoice},
     success: function(data){
       console.log(data)
     },
@@ -24,17 +26,42 @@ rockBtn.addEventListener("click", function(){
       console.log(err);
     }
   })
-  // $.post("/game", {user: req.user.username, playerChoice: req.user.playerChoice })
 })
 
 paperBtn.addEventListener("click", function(){
   userChoice = "Paper";
   winner(userChoice, cpuChoice);
+
+  $.ajax({
+    url: '/game',
+    method: 'post',
+    data: {userChoice: userChoice, //may need to exclude the cpuChoice here, since it'll be built server side
+      cpuChoice: cpuChoice},
+    success: function(data){
+      console.log(data)
+    },
+    error: function(err){
+      console.log(err);
+    }
+  })
 })
 
 scissorsBtn.addEventListener("click", function(){
   userChoice = "Scissors";
   winner(userChoice, cpuChoice);
+
+  $.ajax({
+    url: '/game',
+    method: 'post',
+    data: {userChoice: userChoice, //may need to exclude the cpuChoice here, since it'll be built server side
+      cpuChoice: cpuChoice},
+    success: function(data){
+      console.log(data)
+    },
+    error: function(err){
+      console.log(err);
+    }
+  })
 })
 
 function winner(user, cpu){
@@ -69,7 +96,6 @@ function winner(user, cpu){
 
 function tie(){
   result.innerHTML = "Tie.  You both chose " + userChoice;
-
 }
 
 function cpuWin(){
@@ -81,3 +107,6 @@ function playerWin(){
   result.innerHTML = "Player wins! " + userChoice + method + cpuChoice;
   playerScore.innerHTML++
 }
+
+
+

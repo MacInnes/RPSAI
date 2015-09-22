@@ -17,8 +17,14 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res){
-  hands.insert({user: req.user.username, playerChoice: req.body.playerChoice});
-  console.log(res);
+  hands.update({user: req.user.username}, {
+    $push: {userChoice: req.body.userChoice, cpuChoice: req.body.cpuChoice}
+  }, function(){
+    // run computer choice logic here as a JSON ex: {computer choice: "rock"}
+    var myCursor = hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1}, function(err, data){
+      console.log(myCursor.toArray());
+    });
+  })
 })
 
 

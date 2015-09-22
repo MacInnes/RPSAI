@@ -2,7 +2,8 @@ var express = require('express');
 var passport = require('passport');
 var Account = require('../models/account');
 var router = express.Router();
-
+var db = require('monk')('localhost/hands');
+var hands = db.get('hands')
 
 router.get('/', function (req, res) {
     res.render('index', { user : req.user, title: "Rock Paper Scissors" });
@@ -19,9 +20,12 @@ router.post('/register', function(req, res) {
         }
 
         passport.authenticate('local')(req, res, function () {
-            res.redirect('/');
+            hands.insert({user: req.body.username}, function(){
+            res.redirect('/game');
+            })
         });
     });
+    
 });
 
 router.get('/login', function(req, res) {

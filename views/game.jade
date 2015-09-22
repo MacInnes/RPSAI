@@ -12,10 +12,9 @@ block content
       a(href="register") Create an account
   if (user)
     p Welcome, #{user.username} to the #{title} game page!
-    form(action='/game' method="post")
-      input(type="submit" name="playerChoice" value="Rock" id="Rock")
-      input(type="submit" name="playerChoice" value="Paper" id="Paper")
-      input(type="submit" name="playerChoice" value="Scissors" id="Scissors")
+    button(name="playerChoice" value="Rock" id="Rock") Rock
+    button(name="playerChoice" value="Paper" id="Paper") Paper
+    button(name="playerChoice" value="Scissors" id="Scissors") Scissors
     div
       p(id="result")
     div
