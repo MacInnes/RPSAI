@@ -4,7 +4,7 @@ var Account = require('../models/account');
 var router = express.Router();
 
 router.get('/', function(req, res, next){
-  res.render("stats", {title: "Statistics", user: req.user })
+  res.render("game", {title: "Statistics", user: req.user })
 })
 
 module.exports = router;

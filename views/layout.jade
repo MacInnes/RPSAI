@@ -4,13 +4,39 @@ html(lang="en")
     meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
     meta(charset="utf-8")
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    link(href="./Jumbotron Template for Bootstrap_files/bootstrap.min.css" rel="stylesheet")
-    link(href="./Jumbotron Template for Bootstrap_files/jumbotron.css" rel="stylesheet")
-    link(rel='stylesheet' href='/stylesheets/style.css')
     title= title
-  body
+    link(href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css' rel='stylesheet' media='screen')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    link(href='https://fonts.googleapis.com/css?family=Ubuntu:700,400' rel='stylesheet' type='text/css')
     
+  body
+    nav(class="navbar navbar-inverse navbar-fixed-top")
+      
+      div(class="container")
+        
+        div(class="navbar-header")
+          
+          button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar")
+            span(class="sr-only") Toggle navigation
+            span(class="icon-bar")
+            span(class="icon-bar")
+            span(class="icon-bar")
+          a(class="navbar-brand" href="/" id="navbarBrand") Rock Paper Scissors
+          
+        div(id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;")
+          if (!user)
+            form(class="navbar-form navbar-right" id="userForm" action="" method="post")
+              div(class="form-group")
+                input(type="text" placeholder="Username" class="form-control" name="username")
+              div(class="form-group")
+                input(type="password" placeholder="Password" class="form-control" name="password")
+              button(type="submit" class="btn btn-success" onclick="login()") Login
+              button(type="button" class="btn btn-primary" onclick="register()") Register
+          if (user)
+            form(class="navbar-form navbar-right" id="logout" action="/logout" method="get")
+              button(type="submit" class="btn btn-primary") Logout
     block content
 
   script(src='http://code.jquery.com/jquery.js')
   script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
+  script(type="text/javascript" src="/javascripts/login.js")

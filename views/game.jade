@@ -1,34 +1,58 @@
 extends layout
 
 block content
-  h1= title
-  if (!user)
-    p You must be logged in to access this page.  Please follow one of the links below:
-    p
-      a(href="/") Homepage 
-    p
-      a(href="/login") Login
-    p
-      a(href="register") Create an account
-  if (user)
-    p Welcome, #{user.username} to the #{title} game page!
-    button(name="playerChoice" value="Rock" id="Rock") Rock
-    button(name="playerChoice" value="Paper" id="Paper") Paper
-    button(name="playerChoice" value="Scissors" id="Scissors") Scissors
-    div
-      p(id="result")
-    div
-      table(class="scoreboard")
-        tr(class="scoreboard")
-          th(class="scoreboard") Player Score:
-          th(class="scoreboard") Computer Score:
-        tr(class="scoreboard")
-          td(class="scoreboard" id="playerScore") 0
-          td(class="scoreboard" id="computerScore") 0
+  div(class="container-fluid")
+    
+    if (!user)
+      p You must be logged in to access this page.  Please follow one of the links below:
+      p
+        a(href="/") Homepage 
+      p
+        a(href="/login") Login
+      p
+        a(href="register") Create an account
+    if (user)
+      h1(class="gameHeader") Choose wisely:
+      div(class="container-fluid")
+        div(class="row")
+          div(class="col-md-4" id="Rock")
+            img(src="http://www.thenervousbreakdown.com/wp-content/uploads/2012/04/Rocks.jpg" class="rpsImage")
+          div(class="col-md-4" id="Paper")
+            img(src="https://c2.staticflickr.com/6/5096/5530488320_b14bb6d3f7_b.jpg" class="rpsImage")
+          div(class="col-md-4" id="Scissors")
+            img(src="https://c1.staticflickr.com/3/2693/4268585206_5e50a35f00_b.jpg" class="rpsImage")
+      div(class="container-fluid")
+        div(class="row")
+          h3(class="col-md-12" id="result") ...
+      div(class="container") 
+        table(class="table")
+            tr(class="row")
+              th(class="col-md-3 score") #{user.username} Score:
+              th(class="col-md-3 score") Computer Score:
+            tr(class="row")
+              td(class="col-md-3" id="playerScore") 0
+              td(class="col-md-3" id="computerScore") 0
+            tr(class="row")
+              th(class="col-md-3 score") #{user.username} Total:
+              th(class="col-md-3 score") Computer Total:
+            tr(class="row")
+              td(class="col-md-3" id="playerTotal")= playerTotal
+              td(class="col-md-3" id="computerTotal")= computerTotal
+        table(class="table")    
+            tr(class="row")
+              th(class="col-md-2 score") Rock %
+              th(class="col-md-2 score") Paper %
+              th(class="col-md-2 score") Scissors %
+            tr(class="row")
+              td(class="col-md-2" id="rockPercent")= rockPercent
+              td(class="col-md-2" id="paperPercent")= paperPercent
+              td(class="col-md-2" id="scissorsPercent")= scissorsPercent
+        table(class="table")
+          tr(class="row")
+            th(class="col-md-6 score" id="winPercHeader") Win %
+          tr(class="row")
+            td(class="col-md-6" id="winPercent")= winPercent
 
-    p
-      a(href='/stats') See your stats!
-    p
-      a(href='/logout') Logout
 
-    script(type="text/javascript" src="/javascripts/application.js")
+
+      script(type="text/javascript" src="/javascripts/application.js")

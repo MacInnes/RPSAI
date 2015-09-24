@@ -1,36 +1,4 @@
 extends layout
 
 block content
-  nav(class="navbar navbar-inverse navbar-fixed-top")
-      
-      div(class="container")
-        
-        div(class="navbar-header")
-          
-          button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar")
-            span(class="sr-only") Toggle navigation
-            span(class="icon-bar")
-            span(class="icon-bar")
-            span(class="icon-bar")
-          a(class="navbar-brand" href="/") Rock Paper Scissors
-          
-        div(id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;")
-          if (!user)
-            form(class="navbar-form navbar-right" action="/login" method="post")
-              div(class="form-group")
-                input(type="text" placeholder="Username" class="form-control")
-              div(class="form-group")
-                input(type="password" placeholder="Password" class="form-control")
-            button(type="submit" class="btn btn-success") Login
-            div
-              form(class="navbar-form navbar-right" action="/register")
-              button(type="submit" class="btn btn-success") Register
-          if (user)
-            h1 Welcome to Rock Paper Scissors!
-            p You are currently logged in as #{user.username}
-            p
-              a(href="/game") Play Rock Paper Scissors
-            p
-              a(href="/stats") See your stats
-            p
-              a(href="/logout") Logout
+  img(src="https://thenypost.files.wordpress.com/2014/06/rock-paper.jpg" class="homeImage")

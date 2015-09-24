@@ -11,29 +11,86 @@ var router = express.Router();
 var db = require('monk')('localhost/hands');
 var hands = db.get('hands')
 
-
-
 router.get('/', function(req, res, next) {
-  res.render('game', { title: 'Rock Paper Scissors', user: req.user });
+  hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
+    var totals = data[0]["result"];
+    var initialPlayerTotal = 0;
+    var initialComputerTotal = 0;
+    var totalChoices = data[0]["userChoice"];
+    var rock = 0;
+    var paper = 0;
+    var scissors = 0;
+    for (var i = 0; i < totalChoices.length; i++){
+      if(totalChoices[i] === "Rock"){
+        rock++;
+      } else if (totalChoices[i] === "Paper"){
+        paper++;
+      } else {
+        scissors++;
+      }
+    }
+    var rockPercent = (100 * (rock/totalChoices.length)).toFixed(2) + "%";
+    var paperPercent = (100 * (paper/totalChoices.length)).toFixed(2) + "%";
+    var scissorsPercent = (100 * (scissors/totalChoices.length)).toFixed(2) + "%";
+
+    for (var i = 0; i < totals.length; i++){
+      if (totals[i] === "win"){
+        initialPlayerTotal++;
+      } else if (totals[i] === "loss"){
+        initialComputerTotal++;
+      }
+    }
+
+    var winPercent = (100 * initialPlayerTotal/totals.length).toFixed(2);
+
+    res.render('game', { title: "RPS", 
+      user: req.user, 
+      playerTotal: initialPlayerTotal, 
+      computerTotal: initialComputerTotal,
+      rockPercent: rockPercent,
+      paperPercent: paperPercent,
+      scissorsPercent: scissorsPercent,
+      winPercent: winPercent
+    });
+  });
 });
 
 router.post('/', function(req, res){
   hands.update({user: req.user.username}, {
-    $push: {userChoice: req.body.userChoice, cpuChoice: req.body.cpuChoice}
+    $push: {userChoice: req.body.userChoice }
   }, function(){
     // run computer choice logic here and output a JSON ex: {computer choice: "rock"}
-    hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1}, function(err, data){
+    hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
       var userArray = data[0]["userChoice"];
-      userArray.pop();
+      var lastChoice = userArray.pop();
       var recentChoices = userArray.slice(-3);
       var choices = [];
-      for (var i = 0; i < userArray.length; i++){
-        if (recentChoices[0] === userArray[i] && recentChoices[1] === userArray[i+1] && recentChoices[2] === userArray[i+2]){
-          if (userArray[i+3] != undefined){
-            choices.push(userArray[i+3])
+      var prevResults = [];
+      console.log("recent choices: " + recentChoices)
+      if (userArray.length > 0){
+        for (var i = 0; i < userArray.length; i++){
+          if (recentChoices[0] === userArray[i] && recentChoices[1] === userArray[i+1] && recentChoices[2] === userArray[i+2] && userArray[i+3] != undefined){
+            choices.push(userArray[i+3]);
+            prevResults.push(data[0]["result"][i+3])
+          } else if (recentChoices[1] === userArray[i] && recentChoices[2] === userArray[i+1] && userArray[i+2] != undefined){
+            choices.push(userArray[i+2]);
+            prevResults.push(data[0]["result"][i+2])
           }
         }
+      };
+      console.log("results: " + prevResults)
+      if (choices.length === 0){
+        console.log("RANDOM CHOICE")
+        var random = Math.random();
+        if (random < 0.333){
+          choices.push("Rock");
+        } else if (random < 0.666){
+          choices.push("Paper");
+        } else {
+          choices.push("Scissors");
+        }
       }
+      
       console.log(choices);
       var choicesObj = choices.reduce(function(prev, curr){
         if (prev[curr]){
@@ -53,16 +110,61 @@ router.post('/', function(req, res){
           choice = prop;
         }
       }
-      var cpuChoice = {}; 
+      var cpuChoice = {};
+      var bestChoice = "choice";
+      var playerTotal = "playerTotal";
+      var computerTotal = "computerTotal";
       if (choice === "Rock"){
-        cpuChoice.choice = "Paper";
+        cpuChoice[bestChoice] = "Paper";
       } else if (choice === "Paper"){
-        cpuChoice.choice = "Scissors";
+        cpuChoice[bestChoice] = "Scissors";
       } else if (choice === "Scissors"){
-        cpuChoice.choice = "Rock";
+        cpuChoice[bestChoice] = "Rock";
       }
-      console.log(cpuChoice);
-    });
+      var result;
+      function winner(user, cpu){
+        if (user === cpu){
+          result = "tie";
+        } else if (user === "Rock"){
+          if (cpu === "Paper"){
+            result = "loss";
+          } else {
+            result = "win";
+          }
+        } else if (user === "Paper"){
+          if (cpu === "Scissors"){
+            result = "loss";
+          } else {
+            result= "win";
+          }
+        } else if (user === "Scissors"){
+          if (cpu === "Rock"){
+            result = "loss";
+          } else {
+            result = "win";
+          }
+        }
+      }
+      winner(lastChoice, cpuChoice[bestChoice]);
+      hands.update({user: req.user.username}, {
+        $push: {compChoice: cpuChoice[bestChoice], result: result }}, function(){
+          hands.find({user: req.user.username}, {"_id": 0, "result": 1}, function(err, data){
+            var totals = data[0]["result"];
+            cpuChoice[playerTotal] = 0;
+            cpuChoice[computerTotal] = 0;
+            for (var i = 0; i < totals.length; i++){
+              if (totals[i] === "win"){
+                cpuChoice[playerTotal]++;
+              } else if (totals[i] === "loss"){
+                cpuChoice[computerTotal]++;
+              }
+            }
+            res.json(cpuChoice);
+          })
+          
+        })
+
+      });
   })
 })
 

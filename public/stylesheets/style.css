@@ -1,12 +1,51 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 50px;
+  padding-bottom: 0px;
+  background-color: black;
 }
 
 a {
   color: #00B7FF;
 }
+#navbarBrand {
+  font-weight: 900;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 22px;
+  color: white;
+}
+
+.homeImage {
+  width: 100%;
+  height: auto;
+}
+
+.rpsImage {
+  width: 100%;
+  height: auto;
+}
+
+#result, .gameHeader {
+  font-family: 'Ubuntu', sans-serif;
+  text-align: center;
+  color: white;
+}
+
+.score {
+  font-family: 'Ubuntu', sans-serif;
+  color: white;
+  font-size: 15px
+}
+
+#playerScore, #computerScore, #playerTotal, #computerTotal, #rockPercent, #paperPercent, #scissorsPercent, #winPercent {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 30px;
+  color: white;
+}
+
+#Rock :hover, #Paper :hover, #Scissors :hover {
+  outline: solid white;
+}
 
 .scoreboard {
-  border: 2px solid black;
+  border: 2px solid white;
 }
