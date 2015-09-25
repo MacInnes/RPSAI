@@ -20,37 +20,46 @@ router.get('/', function(req, res, next) {
     var rock = 0;
     var paper = 0;
     var scissors = 0;
-    for (var i = 0; i < totalChoices.length; i++){
-      if(totalChoices[i] === "Rock"){
-        rock++;
-      } else if (totalChoices[i] === "Paper"){
-        paper++;
-      } else {
-        scissors++;
+    if (totalChoices != undefined){
+      for (var i = 0; i < totalChoices.length; i++){
+        if(totalChoices[i] === "Rock"){
+          rock++;
+        } else if (totalChoices[i] === "Paper"){
+          paper++;
+        } else {
+          scissors++;
+        }
       }
-    }
-    var rockPercent = (100 * (rock/totalChoices.length)).toFixed(2) + "%";
-    var paperPercent = (100 * (paper/totalChoices.length)).toFixed(2) + "%";
-    var scissorsPercent = (100 * (scissors/totalChoices.length)).toFixed(2) + "%";
+      var rockPercent = (100 * (rock/totalChoices.length)).toFixed(2) + "%";
+      var paperPercent = (100 * (paper/totalChoices.length)).toFixed(2) + "%";
+      var scissorsPercent = (100 * (scissors/totalChoices.length)).toFixed(2) + "%";
 
-    for (var i = 0; i < totals.length; i++){
-      if (totals[i] === "win"){
-        initialPlayerTotal++;
-      } else if (totals[i] === "loss"){
-        initialComputerTotal++;
+      for (var i = 0; i < totals.length; i++){
+        if (totals[i] === "win"){
+          initialPlayerTotal++;
+        } else if (totals[i] === "loss"){
+          initialComputerTotal++;
+        }
       }
+
+      var winPercent = (100 * initialPlayerTotal/totals.length).toFixed(2) + "%";
+      var lossPercent = (100 * initialComputerTotal/totals.length).toFixed(2) + "%";
+      var tiePercent = (100 * (totals.length - (initialPlayerTotal + initialComputerTotal))/totals.length).toFixed(2) + "%";
+
+      var tempTotal = initialComputerTotal;
+      initialComputerTotal = initialComputerTotal + " (" + (100*(initialComputerTotal/(initialComputerTotal+initialPlayerTotal))).toFixed(0) + "%)";
+      initialPlayerTotal = initialPlayerTotal + " (" + (100*(initialPlayerTotal/(initialPlayerTotal+tempTotal))).toFixed(0) + "%)"
     }
-
-    var winPercent = (100 * initialPlayerTotal/totals.length).toFixed(2);
-
     res.render('game', { title: "RPS", 
-      user: req.user, 
-      playerTotal: initialPlayerTotal, 
-      computerTotal: initialComputerTotal,
-      rockPercent: rockPercent,
-      paperPercent: paperPercent,
-      scissorsPercent: scissorsPercent,
-      winPercent: winPercent
+        user: req.user, 
+        playerTotal: initialPlayerTotal, 
+        computerTotal: initialComputerTotal,
+        rockPercent: rockPercent,
+        paperPercent: paperPercent,
+        scissorsPercent: scissorsPercent,
+        winPercent: winPercent,
+        lossPercent: lossPercent,
+        tiePercent: tiePercent
     });
   });
 });
@@ -159,6 +168,37 @@ router.post('/', function(req, res){
                 cpuChoice[computerTotal]++;
               }
             }
+            var winPercentage = "winPercentage";
+            var lossPercentage = "lossPercentage";
+            var tiePercentage = "tiePercentage";
+
+            cpuChoice[winPercentage] = (100 * cpuChoice[playerTotal]/totals.length).toFixed(2) + "%";
+            cpuChoice[lossPercentage] = (100 * cpuChoice[computerTotal]/totals.length).toFixed(2) + "%";
+            cpuChoice[tiePercentage] = (100 * (totals.length - (cpuChoice[playerTotal] + cpuChoice[computerTotal]))/totals.length).toFixed(2) + "%";  
+
+
+            var totalChoices = data[0]["userChoice"];
+            var rock = 0;
+            var paper = 0;
+            var scissors = 0;
+            for (var i = 0; i < totalChoices.length; i++){
+              if(totalChoices[i] === "Rock"){
+                rock++;
+              } else if (totalChoices[i] === "Paper"){
+                paper++;
+              } else {
+                scissors++;
+              }
+            }
+            var rockPercent = (100 * (rock/totalChoices.length)).toFixed(2) + "%";
+            var paperPercent = (100 * (paper/totalChoices.length)).toFixed(2) + "%";
+            var scissorsPercent = (100 * (scissors/totalChoices.length)).toFixed(2) + "%";
+            var rockPercentage = "rockPercentage";
+            var paperPercentage = "paperPercentage";
+            var scissorsPercentage = "scissorsPercentage";
+            cpuChoice[rockPercentage] = rockPercent;
+            cpuChoice[paperPercentage] = paperPercent;
+            cpuChoice[scissorsPercentage] = scissorsPercent;
             res.json(cpuChoice);
           })
           

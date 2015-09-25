@@ -6,8 +6,22 @@ var playerScore = document.getElementById("playerScore");
 var computerScore = document.getElementById("computerScore");
 var playerTotalField = document.getElementById("playerTotal");
 var computerTotalField = document.getElementById("computerTotal");
+var rockPercentField = document.getElementById("rockPercent");
+var paperPercentField = document.getElementById("paperPercent");
+var scissorsPercentField = document.getElementById("scissorsPercent");
+var winPercentField = document.getElementById("winPercent");
+var tiePercentField = document.getElementById("tiePercent");
+var lossPercentField = document.getElementById("lossPercent");
+var winPercent;
+var tiePercent;
+var lossPercent;
+var rockPercent;
+var paperPercent;
+var scissorsPercent;
 var playerTotal;
 var computerTotal;
+var playerTotalPercent;
+var computerTotalPercent;
 var userChoice;
 var cpuChoice;
 var method;
@@ -26,6 +40,13 @@ rockBtn.addEventListener("click", function(){
       cpuChoice = data.choice;
       playerTotal = data.playerTotal;
       computerTotal = data.computerTotal;
+      computerTotal = data.computerTotal;
+      rockPercent = data.rockPercentage;
+      paperPercent = data.paperPercentage;
+      scissorsPercent = data.scissorsPercentage;
+      winPercent = data.winPercentage;
+      tiePercent = data.tiePercentage;
+      lossPercent = data.lossPercentage;
       winner(userChoice, cpuChoice);
     },
     error: function(err){
@@ -48,6 +69,13 @@ paperBtn.addEventListener("click", function(){
       cpuChoice = data.choice;
       playerTotal = data.playerTotal;
       computerTotal = data.computerTotal;
+      computerTotal = data.computerTotal;
+      rockPercent = data.rockPercentage;
+      paperPercent = data.paperPercentage;
+      scissorsPercent = data.scissorsPercentage;
+      winPercent = data.winPercentage;
+      tiePercent = data.tiePercentage;
+      lossPercent = data.lossPercentage;
       winner(userChoice, cpuChoice);
     },
     error: function(err){
@@ -70,7 +98,12 @@ scissorsBtn.addEventListener("click", function(){
       playerResult = data.result;
       playerTotal = data.playerTotal;
       computerTotal = data.computerTotal;
-
+      rockPercent = data.rockPercentage;
+      paperPercent = data.paperPercentage;
+      scissorsPercent = data.scissorsPercentage;
+      winPercent = data.winPercentage;
+      tiePercent = data.tiePercentage;
+      lossPercent = data.lossPercentage;
       winner(userChoice, cpuChoice);
     },
     error: function(err){
@@ -81,6 +114,13 @@ scissorsBtn.addEventListener("click", function(){
 })
 
 function winner(user, cpu){
+  rockPercentField.innerHTML = rockPercent;
+  paperPercentField.innerHTML = paperPercent;
+  scissorsPercentField.innerHTML = scissorsPercent;
+  winPercentField.innerHTML = winPercent;
+  tiePercentField.innerHTML = tiePercent;
+  lossPercentField.innerHTML = lossPercent;
+  
   if (user === cpu){
     return tie();
   } else if (user === "Rock"){
@@ -112,24 +152,22 @@ function winner(user, cpu){
 
 function tie(){
   result.innerHTML = "Tie.  You both chose " + userChoice;
-  // result.style.fontSize = "30px";
-  setTimeout(function(){
-    result.style.fontSize = "";
-  }, 500)
+
 }
 
 function cpuWin(){
   result.innerHTML = "CPU wins! " + cpuChoice + method + userChoice;
   result.style.color = "#FF0000";
-  // result.style.fontSize = "30px";
   computerScore.innerHTML++;
-  computerTotalField.innerHTML = computerTotal;
+
+  computerTotalPercent = (100*(computerTotal/(computerTotal + playerTotal))).toFixed(0) + "%";
+  computerTotalField.innerHTML = computerTotal + " (" + computerTotalPercent + ")";
 
   computerScore.style.color = "#FF0000";
-  // computerScore.style.fontSize = "30px";
   computerTotalField.style.color = "#FF0000";
-  // computerTotalField.style.fontSize = "30px";
-  
+  lossPercentField.style.color = "#FF0000";
+
+
   setTimeout(function(){
     computerScore.style.color = "";
     computerScore.style.fontSize = "";
@@ -137,6 +175,7 @@ function cpuWin(){
     computerTotalField.style.fontSize = "";
     result.style.color = "";
     result.style.fontSize = "";
+    lossPercentField.style.color = "";
 
   }, 500)
 }
@@ -144,14 +183,17 @@ function cpuWin(){
 function playerWin(){
   result.innerHTML = "You win! " + userChoice + method + cpuChoice;
   result.style.color = "#00FF00";
-  // result.style.fontSize = "30px";
+
   playerScore.innerHTML++;
-  playerTotalField.innerHTML = playerTotal;
+  
+  playerTotalPercent = (100*(playerTotal/(computerTotal + playerTotal))).toFixed(0) + "%";
+  playerTotalField.innerHTML = playerTotal + " (" + playerTotalPercent + ")";
 
   playerScore.style.color = "#00FF00";
-  // playerScore.style.fontSize = "30px";
+
   playerTotalField.style.color = "#00FF00";
-  // playerTotalField.style.fontSize = "30px";
+
+  winPercentField.style.color = "#00FF00";
 
   setTimeout(function(){
     playerScore.style.color = "";
@@ -160,8 +202,11 @@ function playerWin(){
     playerTotalField.style.fontSize = "";
     result.style.color = "";
     result.style.fontSize = "";
+    winPercentField.style.color = "";
   }, 500)
 }
+
+// $(".stats") figure out how to show/hide the stats
 
 
 

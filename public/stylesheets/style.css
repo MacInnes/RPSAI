@@ -7,11 +7,23 @@ body {
 a {
   color: #00B7FF;
 }
-#navbarBrand {
-  font-weight: 900;
+
+#about {
+  margin: 50px;
   font-family: 'Ubuntu', sans-serif;
-  font-size: 22px;
+  font-size: 18px;
   color: white;
+}
+
+#navbarBrand, #welcome {
+/*  font-weight: 900;*/
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 24px;
+  color: white;
+}
+
+#statsToggle {
+  margin: 0 auto;
 }
 
 .homeImage {
@@ -36,7 +48,7 @@ a {
   font-size: 15px
 }
 
-#playerScore, #computerScore, #playerTotal, #computerTotal, #rockPercent, #paperPercent, #scissorsPercent, #winPercent {
+#playerScore, #computerScore, #playerTotal, #computerTotal, #rockPercent, #paperPercent, #scissorsPercent, #winPercent, #tiePercent, #lossPercent {
   font-family: 'Ubuntu', sans-serif;
   font-size: 30px;
   color: white;

@@ -9,6 +9,10 @@ router.get('/', function (req, res) {
     res.render('index', { user : req.user, title: "Rock Paper Scissors" });
 });
 
+router.get("/about", function (req, res) {
+    res.render("about", {user: req.user, title: "About RPS"})
+})
+
 router.get('/register', function(req, res) {
     res.render('register', { });
 });
@@ -16,7 +20,8 @@ router.get('/register', function(req, res) {
 router.post('/register', function(req, res) {
     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
         if (err) {
-          return res.render("register", {info: "Sorry. That username already exists. Try again."});
+
+            return res.redirect("/", {info: "Sorry. That username already exists. Try again."});
         }
 
         passport.authenticate('local')(req, res, function () {

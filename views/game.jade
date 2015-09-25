@@ -24,34 +24,40 @@ block content
       div(class="container-fluid")
         div(class="row")
           h3(class="col-md-12" id="result") ...
-      div(class="container") 
+      div(class="container-fluid") 
         table(class="table")
-            tr(class="row")
-              th(class="col-md-3 score") #{user.username} Score:
-              th(class="col-md-3 score") Computer Score:
-            tr(class="row")
-              td(class="col-md-3" id="playerScore") 0
-              td(class="col-md-3" id="computerScore") 0
-            tr(class="row")
-              th(class="col-md-3 score") #{user.username} Total:
-              th(class="col-md-3 score") Computer Total:
-            tr(class="row")
-              td(class="col-md-3" id="playerTotal")= playerTotal
-              td(class="col-md-3" id="computerTotal")= computerTotal
+          tr(class="row")
+            th(class="col-md-3 score") #{user.username} Score:
+            th(class="col-md-3 score") Computer Score:
+          tr(class="row")
+            td(class="col-md-3" id="playerScore") 0
+            td(class="col-md-3" id="computerScore") 0
+      div(class="container-fluid")
+        table(class="table")
+          tr(class="row")
+            th(class="col-md-3 score") #{user.username} Total:
+            th(class="col-md-3 score") Computer Total:
+          tr(class="row")
+            td(class="col-md-3" id="playerTotal")= playerTotal
+            td(class="col-md-3" id="computerTotal")= computerTotal
         table(class="table")    
-            tr(class="row")
-              th(class="col-md-2 score") Rock %
-              th(class="col-md-2 score") Paper %
-              th(class="col-md-2 score") Scissors %
-            tr(class="row")
-              td(class="col-md-2" id="rockPercent")= rockPercent
-              td(class="col-md-2" id="paperPercent")= paperPercent
-              td(class="col-md-2" id="scissorsPercent")= scissorsPercent
+          tr(class="row")
+            th(class="col-md-2 score") Rock %
+            th(class="col-md-2 score") Paper %
+            th(class="col-md-2 score") Scissors %
+          tr(class="row")
+            td(class="col-md-2" id="rockPercent")= rockPercent
+            td(class="col-md-2" id="paperPercent")= paperPercent
+            td(class="col-md-2" id="scissorsPercent")= scissorsPercent
         table(class="table")
           tr(class="row")
-            th(class="col-md-6 score" id="winPercHeader") Win %
+            th(class="col-md-2 score" id="winPercHeader") #{user.username} Win %
+            th(class="col-md-2 score" id="tiePercHeader") Tie %
+            th(class="col-md-2 score" id="lossPercHeader") AI Win %
           tr(class="row")
-            td(class="col-md-6" id="winPercent")= winPercent
+            td(class="col-md-2" id="winPercent")= winPercent
+            td(class="col-md-2" id="tiePercent")= tiePercent
+            td(class="col-md-2" id="lossPercent")= lossPercent
 
 
 
