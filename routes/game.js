@@ -1,9 +1,3 @@
-// var express = require('express');
-// var router = express.Router();
-// var db = require('monk')('localhost/rps');
-// var users = db.get('users');
-// var hands = db.get('hands');
-
 var express = require('express');
 var passport = require('passport');
 var Account = require('../models/account');
