@@ -29,6 +29,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('express-session')({
+    // genid: function(req) {
+    //     return genuuid() // use UUIDs for session IDs 
+    //   },
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false
