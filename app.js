@@ -14,7 +14,7 @@ var users = require('./routes/users');
 var game = require('./routes/game');
 var stats = require('./routes/stats');
 
-var db = require('monk')(process.env.MONGOLAB_URI || 'localhost/hands');
+var db = require('monk')(process.env.MONGODB_URI || 'localhost/hands');
 
 var app = express();
 
