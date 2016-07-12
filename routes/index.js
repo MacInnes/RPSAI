@@ -2,7 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var Account = require('../models/account');
 var router = express.Router();
-var db = require('./db');
+var db = require('../db');
 var hands = db.get('hands');
 
 db.connect();

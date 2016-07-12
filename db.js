@@ -11,4 +11,4 @@ function get(collection){
   return db.get(collection);
 }
 
-module.exports = db;
+module.exports = {'connect': connect, 'get': get};
