@@ -3,9 +3,10 @@ var passport = require('passport');
 var Account = require('../models/account');
 var router = express.Router();
 var db = require('../db');
+db.connect();
 var hands = db.get('hands');
 
-db.connect();
+
 
 router.get('/', function (req, res) {
     res.render('index', { user : req.user, title: "Rock Paper Scissors" });
