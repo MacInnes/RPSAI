@@ -5,6 +5,8 @@ var router = express.Router();
 var db = require('./db');
 var hands = db.get('hands');
 
+db.connect();
+
 router.get('/', function (req, res) {
     res.render('index', { user : req.user, title: "Rock Paper Scissors" });
 });

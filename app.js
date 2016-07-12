@@ -14,7 +14,7 @@ var users = require('./routes/users');
 var game = require('./routes/game');
 var stats = require('./routes/stats');
 
-var db = require('./db');
+// var db = require('./db');
 
 var app = express();
 
@@ -39,10 +39,10 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(function(req,res,next){
-    req.db = db;
-    next();
-});
+// app.use(function(req,res,next){
+//     req.db = db;
+//     next();
+// });
 
 app.use('/', routes);
 app.use('/game', game)
@@ -55,7 +55,7 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-db.connect();
+// db.connect();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
