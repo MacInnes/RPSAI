@@ -39,10 +39,10 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(function(req,res,next){
-//     req.db = db;
-//     next();
-// });
+app.use(function(req,res,next){
+    req.db = db;
+    next();
+});
 
 app.use('/', routes);
 app.use('/game', game)
