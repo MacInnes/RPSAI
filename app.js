@@ -5,7 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -14,7 +14,7 @@ var users = require('./routes/users');
 var game = require('./routes/game');
 var stats = require('./routes/stats');
 
-// var db = require('monk')(process.env.MONGODB_URI || 'localhost/hands');
+var db = require('monk')(process.env.MONGODB_URI || 'localhost/hands');
 
 var app = express();
 
@@ -55,7 +55,7 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect('mongodb://' + process.env.MONGODB_URI || 'localhost/hands');
+// mongoose.connect('mongodb://' + process.env.MONGODB_URI || 'localhost/hands');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
