@@ -7,6 +7,7 @@ var hands = db.get('hands')
 
 router.get('/', function(req, res, next) {
   hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
+    console.log(err);
     var totals = data[0]["result"];
     var initialPlayerTotal = 0;
     var initialComputerTotal = 0;

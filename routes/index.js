@@ -3,7 +3,7 @@ var passport = require('passport');
 var Account = require('../models/account');
 var router = express.Router();
 var db = require('monk')(process.env.MONGODB_URI || 'localhost/hands');
-var hands = db.get('hands')
+var hands = db.get('hands');
 
 router.get('/', function (req, res) {
     res.render('index', { user : req.user, title: "Rock Paper Scissors" });
