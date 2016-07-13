@@ -56,6 +56,8 @@ router.get('/', function(req, res, next) {
           lossPercent: lossPercent,
           tiePercent: tiePercent
       });
+    } else {
+      res.render('game', {title: "RPS"});
     }
 
   });
