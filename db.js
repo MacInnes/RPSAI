@@ -9,6 +9,6 @@ module.exports = {
 	  
 	},
 	get: function(collection){
-	  return db.get(collection);
+	  return db.findOne(collection);
 	}
 };
