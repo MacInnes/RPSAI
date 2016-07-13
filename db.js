@@ -5,7 +5,7 @@ var db;
 module.exports = {
 	connect: function(){
 	  mongoose.connect(process.env.MONGODB_URI || 'localhost/hands');
-    db = monk(process.env.MONGODB_URI || 'localhost/hands');
+    db = monk(process.env.MONGODB_URI);
 	  
 	},
 	get: function(collection){
