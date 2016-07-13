@@ -7,54 +7,57 @@ var hands = db.get('hands')
 
 router.get('/', function(req, res, next) {
   hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
-    var totals = data[0]["result"];
-    var initialPlayerTotal = 0;
-    var initialComputerTotal = 0;
-    var totalChoices = data[0]["userChoice"];
-    var rock = 0;
-    var paper = 0;
-    var scissors = 0;
-    if (totalChoices != undefined){
-      for (var i = 0; i < totalChoices.length; i++){
-        if(totalChoices[i] === "Rock"){
-          rock++;
-        } else if (totalChoices[i] === "Paper"){
-          paper++;
-        } else {
-          scissors++;
+    if (data){
+      var totals = data[0]["result"];
+      var initialPlayerTotal = 0;
+      var initialComputerTotal = 0;
+      var totalChoices = data[0]["userChoice"];
+      var rock = 0;
+      var paper = 0;
+      var scissors = 0;
+      if (totalChoices != undefined){
+        for (var i = 0; i < totalChoices.length; i++){
+          if(totalChoices[i] === "Rock"){
+            rock++;
+          } else if (totalChoices[i] === "Paper"){
+            paper++;
+          } else {
+            scissors++;
+          }
         }
-      }
-      var rockPercent = (100 * (rock/totalChoices.length)).toFixed(2) + "%";
-      var paperPercent = (100 * (paper/totalChoices.length)).toFixed(2) + "%";
-      var scissorsPercent = (100 * (scissors/totalChoices.length)).toFixed(2) + "%";
+        var rockPercent = (100 * (rock/totalChoices.length)).toFixed(2) + "%";
+        var paperPercent = (100 * (paper/totalChoices.length)).toFixed(2) + "%";
+        var scissorsPercent = (100 * (scissors/totalChoices.length)).toFixed(2) + "%";
 
-      for (var i = 0; i < totals.length; i++){
-        if (totals[i] === "win"){
-          initialPlayerTotal++;
-        } else if (totals[i] === "loss"){
-          initialComputerTotal++;
+        for (var i = 0; i < totals.length; i++){
+          if (totals[i] === "win"){
+            initialPlayerTotal++;
+          } else if (totals[i] === "loss"){
+            initialComputerTotal++;
+          }
         }
+
+        var winPercent = (100 * initialPlayerTotal/totals.length).toFixed(2) + "%";
+        var lossPercent = (100 * initialComputerTotal/totals.length).toFixed(2) + "%";
+        var tiePercent = (100 * (totals.length - (initialPlayerTotal + initialComputerTotal))/totals.length).toFixed(2) + "%";
+
+        var tempTotal = initialComputerTotal;
+        initialComputerTotal = initialComputerTotal + " (" + (100*(initialComputerTotal/(initialComputerTotal+initialPlayerTotal))).toFixed(0) + "%)";
+        initialPlayerTotal = initialPlayerTotal + " (" + (100*(initialPlayerTotal/(initialPlayerTotal+tempTotal))).toFixed(0) + "%)"
       }
-
-      var winPercent = (100 * initialPlayerTotal/totals.length).toFixed(2) + "%";
-      var lossPercent = (100 * initialComputerTotal/totals.length).toFixed(2) + "%";
-      var tiePercent = (100 * (totals.length - (initialPlayerTotal + initialComputerTotal))/totals.length).toFixed(2) + "%";
-
-      var tempTotal = initialComputerTotal;
-      initialComputerTotal = initialComputerTotal + " (" + (100*(initialComputerTotal/(initialComputerTotal+initialPlayerTotal))).toFixed(0) + "%)";
-      initialPlayerTotal = initialPlayerTotal + " (" + (100*(initialPlayerTotal/(initialPlayerTotal+tempTotal))).toFixed(0) + "%)"
+      res.render('game', { title: "RPS", 
+          user: req.user, 
+          playerTotal: initialPlayerTotal, 
+          computerTotal: initialComputerTotal,
+          rockPercent: rockPercent,
+          paperPercent: paperPercent,
+          scissorsPercent: scissorsPercent,
+          winPercent: winPercent,
+          lossPercent: lossPercent,
+          tiePercent: tiePercent
+      });
     }
-    res.render('game', { title: "RPS", 
-        user: req.user, 
-        playerTotal: initialPlayerTotal, 
-        computerTotal: initialComputerTotal,
-        rockPercent: rockPercent,
-        paperPercent: paperPercent,
-        scissorsPercent: scissorsPercent,
-        winPercent: winPercent,
-        lossPercent: lossPercent,
-        tiePercent: tiePercent
-    });
+
   });
 });
 
