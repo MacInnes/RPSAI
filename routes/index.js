@@ -28,6 +28,7 @@ router.post('/register', function(req, res) {
         }
 
         passport.authenticate('local')(req, res, function () {
+            console.log('USER:', req.body.username);
             hands.insert({user: req.body.username}, function(){
             res.redirect('/game');
             })
