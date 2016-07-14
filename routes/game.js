@@ -220,7 +220,88 @@ router.post('/', function(req, res){
 
         });
       } else {
-        console.log('POST ROUTE ELSE STATEMENT')
+        console.log('POST ROUTE ELSE STATEMENT');
+        var random = Math.random();
+        if (random < 0.333){
+          choices.push("Rock");
+        } else if (random < 0.666){
+          choices.push("Paper");
+        } else {
+          choices.push("Scissors");
+        }
+        var result;
+        function winner(user, cpu){
+          if (user === cpu){
+            result = "tie";
+          } else if (user === "Rock"){
+            if (cpu === "Paper"){
+              result = "loss";
+            } else {
+              result = "win";
+            }
+          } else if (user === "Paper"){
+            if (cpu === "Scissors"){
+              result = "loss";
+            } else {
+              result= "win";
+            }
+          } else if (user === "Scissors"){
+            if (cpu === "Rock"){
+              result = "loss";
+            } else {
+              result = "win";
+            }
+          }
+        }
+        winner(lastChoice, cpuChoice[bestChoice]);
+        hands.update({user: req.user.username}, {
+          $push: {compChoice: cpuChoice[bestChoice], result: result }}, function(){
+            hands.find({user: req.user.username}, {"_id": 0, "result": 1}, function(err, data){
+              var totals = data[0]["result"];
+              cpuChoice[playerTotal] = 0;
+              cpuChoice[computerTotal] = 0;
+              for (var i = 0; i < totals.length; i++){
+                if (totals[i] === "win"){
+                  cpuChoice[playerTotal]++;
+                } else if (totals[i] === "loss"){
+                  cpuChoice[computerTotal]++;
+                }
+              }
+              var winPercentage = "winPercentage";
+              var lossPercentage = "lossPercentage";
+              var tiePercentage = "tiePercentage";
+
+              cpuChoice[winPercentage] = (100 * cpuChoice[playerTotal]/totals.length).toFixed(2) + "%";
+              cpuChoice[lossPercentage] = (100 * cpuChoice[computerTotal]/totals.length).toFixed(2) + "%";
+              cpuChoice[tiePercentage] = (100 * (totals.length - (cpuChoice[playerTotal] + cpuChoice[computerTotal]))/totals.length).toFixed(2) + "%";  
+
+
+              var totalChoices = data[0]["userChoice"];
+              console.log('TOTAL CHOICES:', totalChoices);
+              var rock = 0;
+              var paper = 0;
+              var scissors = 0;
+              for (var i = 0; i < totalChoices.length; i++){
+                if(totalChoices[i] === "Rock"){
+                  rock++;
+                } else if (totalChoices[i] === "Paper"){
+                  paper++;
+                } else {
+                  scissors++;
+                }
+              }
+              var rockPercent = (100 * (rock/totalChoices.length)).toFixed(2) + "%";
+              var paperPercent = (100 * (paper/totalChoices.length)).toFixed(2) + "%";
+              var scissorsPercent = (100 * (scissors/totalChoices.length)).toFixed(2) + "%";
+              var rockPercentage = "rockPercentage";
+              var paperPercentage = "paperPercentage";
+              var scissorsPercentage = "scissorsPercentage";
+              cpuChoice[rockPercentage] = rockPercent;
+              cpuChoice[paperPercentage] = paperPercent;
+              cpuChoice[scissorsPercentage] = scissorsPercent;
+              res.json(cpuChoice);
+            })
+
         res.render('game', { title: "RPS", 
           user: req.user, 
           playerTotal: 0, 
