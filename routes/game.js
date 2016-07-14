@@ -2,7 +2,8 @@ var express = require('express');
 var hands = require('../models/hands');
 var router = express.Router();
 var db = require('../db');
-var hands = db.collection('hands');
+var connection = db.connect();
+var hands = connection.collection('hands');
 
 router.get('/', function(req, res, next) {
   hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
