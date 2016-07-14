@@ -60,7 +60,17 @@ router.get('/', function(req, res, next) {
           tiePercent: tiePercent
       });
     } else {
-      res.render('game', {title: "RPS"});
+      res.render('game', { title: "RPS", 
+        user: req.user, 
+        playerTotal: 0, 
+        computerTotal: 0,
+        rockPercent: 0,
+        paperPercent: 0,
+        scissorsPercent: 0,
+        winPercent: 0,
+        lossPercent: 0,
+        tiePercent: 0
+      });
     }
 
   });
