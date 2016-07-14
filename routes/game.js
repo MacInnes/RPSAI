@@ -216,7 +216,6 @@ router.post('/', function(req, res){
               res.json(cpuChoice);
             })
             
-          })
 
         });
       } else {
