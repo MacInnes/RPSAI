@@ -9,11 +9,11 @@ router.get('/', function(req, res, next) {
   hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
     console.log('GAME ROUTE ERROR:', err);
     console.log('Game Route DATA:', data);
-    if (data){
-      var totals = data[0]["result"] || [];
+    if (data[0]["result"]){
+      var totals = data[0]["result"];
       var initialPlayerTotal = 0;
       var initialComputerTotal = 0;
-      var totalChoices = data[0]["userChoice"] || [];
+      var totalChoices = data[0]["userChoice"];
       var rock = 0;
       var paper = 0;
       var scissors = 0;
