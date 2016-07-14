@@ -313,8 +313,8 @@ router.post('/', function(req, res){
           lossPercent: 0,
           tiePercent: 0
         });
-      });
-    })  
+      }));
+    }  
   })
 })
 
