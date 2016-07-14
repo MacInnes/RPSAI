@@ -216,6 +216,7 @@ router.post('/', function(req, res){
               res.json(cpuChoice);
             })
             
+        
 
         });
       } else {
@@ -232,7 +233,7 @@ router.post('/', function(req, res){
           tiePercent: 0
         });
       }
-      
+    })  
   })
 })
 
