@@ -221,6 +221,7 @@ router.post('/', function(req, res){
         });
       } else {
         console.log('POST ROUTE ELSE STATEMENT');
+        var choices = [];
         var random = Math.random();
         if (random < 0.333){
           choices.push("Rock");
@@ -228,6 +229,17 @@ router.post('/', function(req, res){
           choices.push("Paper");
         } else {
           choices.push("Scissors");
+        }
+        var cpuChoice = {};
+        var bestChoice = "choice";
+        var playerTotal = "playerTotal";
+        var computerTotal = "computerTotal";
+        if (choice === "Rock"){
+          cpuChoice[bestChoice] = "Paper";
+        } else if (choice === "Paper"){
+          cpuChoice[bestChoice] = "Scissors";
+        } else if (choice === "Scissors"){
+          cpuChoice[bestChoice] = "Rock";
         }
         var result;
         function winner(user, cpu){
