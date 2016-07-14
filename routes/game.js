@@ -2,7 +2,7 @@ var express = require('express');
 var hands = require('../models/hands');
 var router = express.Router();
 var db = require('../db');
-var connection = db.connect();
+var connection = db.persist();
 var hands = connection.collection('hands');
 
 router.get('/', function(req, res, next) {
