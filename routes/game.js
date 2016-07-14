@@ -2,7 +2,7 @@ var express = require('express');
 var hands = require('../models/hands');
 var router = express.Router();
 var db = require('../db');
-// var hands = db.get('hands')
+var hands = db.collection('hands');
 
 router.get('/', function(req, res, next) {
   hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
@@ -177,6 +177,7 @@ router.post('/', function(req, res){
 
 
             var totalChoices = data[0]["userChoice"];
+            console.log('TOTAL CHOICES:', totalChoices);
             var rock = 0;
             var paper = 0;
             var scissors = 0;
