@@ -8,5 +8,15 @@ var hands = new Schema({
 	result: [String]
 });
 
+hands.insert = function(obj, cb){
+	obj.save(function(err){
+		if (err){
+			return err
+		} else {
+			return cb();
+		}
+	})
+}
+
 
 module.exports = mongoose.model('Hands', hands);
