@@ -6,10 +6,11 @@ var connection = db.persist();
 var hands = connection.collection('hands');
 
 router.get('/', function(req, res, next) {
+  console.log("USER:", req.user.username);
   hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
     console.log('GAME ROUTE ERROR:', err);
     console.log('Game Route DATA:', data);
-    if (data[0]["result"]){
+    if (data[0]){
       var totals = data[0]["result"];
       var initialPlayerTotal = 0;
       var initialComputerTotal = 0;
