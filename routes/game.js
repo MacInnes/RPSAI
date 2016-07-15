@@ -195,7 +195,7 @@ router.post('/', function(req, res){
               cpuChoice[tiePercentage] = (100 * (totals.length - (cpuChoice[playerTotal] + cpuChoice[computerTotal]))/totals.length).toFixed(2) + "%";  
 
 
-              var totalChoices = data[0]["userChoice"];
+              var totalChoices = data[0]["userChoice"] || [];
               console.log('TOTAL CHOICES:', totalChoices);
               var rock = 0;
               var paper = 0;
