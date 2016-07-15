@@ -33,9 +33,9 @@ router.get('/', function(req, res, next) {
             scissors++;
           }
         }
-        var rockPercent = (100 * (rock/totalChoices.length)).toFixed(2) + "%";
-        var paperPercent = (100 * (paper/totalChoices.length)).toFixed(2) + "%";
-        var scissorsPercent = (100 * (scissors/totalChoices.length)).toFixed(2) + "%";
+        var rockPercent = (100 * (rock/totalChoices.length)).toFixed(2) + "%" || 0;
+        var paperPercent = (100 * (paper/totalChoices.length)).toFixed(2) + "%" || 0;
+        var scissorsPercent = (100 * (scissors/totalChoices.length)).toFixed(2) + "%" || 0;
 
         for (var i = 0; i < totals.length; i++){
           if (totals[i] === "win"){
@@ -45,9 +45,9 @@ router.get('/', function(req, res, next) {
           }
         }
 
-        var winPercent = (100 * initialPlayerTotal/totals.length).toFixed(2) + "%";
-        var lossPercent = (100 * initialComputerTotal/totals.length).toFixed(2) + "%";
-        var tiePercent = (100 * (totals.length - (initialPlayerTotal + initialComputerTotal))/totals.length).toFixed(2) + "%";
+        var winPercent = (100 * initialPlayerTotal/totals.length).toFixed(2) + "%" || 0;
+        var lossPercent = (100 * initialComputerTotal/totals.length).toFixed(2) + "%" || 0;
+        var tiePercent = (100 * (totals.length - (initialPlayerTotal + initialComputerTotal))/totals.length).toFixed(2) + "%" || 0;
 
         var tempTotal = initialComputerTotal;
         initialComputerTotal = initialComputerTotal + " (" + (100*(initialComputerTotal/(initialComputerTotal+initialPlayerTotal))).toFixed(0) + "%)";
