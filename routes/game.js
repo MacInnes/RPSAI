@@ -2,8 +2,8 @@ var express = require('express');
 var Hands = require('../models/hands');
 var router = express.Router();
 var db = require('../db');
-var connection = db.persist();
-var hands = connection.collection('hands');
+// var connection = db.persist();
+// var hands = connection.collection('hands');
 
 
 
@@ -271,7 +271,7 @@ router.post('/', function(req, res){
         winner(lastChoice, cpuChoice[bestChoice]);
         hands.update({user: req.user.username}, {
           $push: {compChoice: cpuChoice[bestChoice], result: result }}, function(){
-            hands.find({user: req.user.username}, {"_id": 0, "result": 1}, function(err, data){
+            Hands.find({user: req.user.username}, {"_id": 0, "result": 1}, function(err, data){
               var totals = data[0]["result"];
               cpuChoice[playerTotal] = 0;
               cpuChoice[computerTotal] = 0;
