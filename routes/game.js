@@ -7,6 +7,8 @@ var db = require('../db');
 
 
 
+
+
 router.get('/', function(req, res, next) {
   console.log('HANDS FROM GAME', hands);
   console.log("USER:", req.user.username);
