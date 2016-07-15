@@ -5,9 +5,10 @@ var db = require('../db');
 var connection = db.persist();
 var hands = connection.collection('hands');
 
-console.log('HANDS FROM GAME', hands);
+
 
 router.get('/', function(req, res, next) {
+  console.log('HANDS FROM GAME', hands);
   console.log("USER:", req.user.username);
   hands.find({user: req.user.username}, function(err, data){
     console.log('GAME ROUTE ERROR:', err);
