@@ -6,7 +6,7 @@ var router = express.Router();
 var db = require('../db');
 var connection = db.connect();
 var hands = connection.collection('hands');
-// var hands = db.get('hands');
+var hands = db.get('hands');
 
 
 
