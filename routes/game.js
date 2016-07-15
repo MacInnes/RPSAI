@@ -5,7 +5,7 @@ var db = require('../db');
 var connection = db.persist();
 var hands = connection.collection('hands');
 
-console.log(hands);
+console.log('HANDS FROM GAME', hands);
 
 router.get('/', function(req, res, next) {
   console.log("USER:", req.user.username);
