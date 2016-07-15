@@ -196,6 +196,7 @@ router.post('/', function(req, res){
 
 
               var totalChoices = data[0]["userChoice"] || [];
+              console.log('data for TOTAL CHOICES:', data[0]["userChoice"])
               console.log('TOTAL CHOICES:', totalChoices);
               var rock = 0;
               var paper = 0;
