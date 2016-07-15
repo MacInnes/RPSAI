@@ -1,13 +1,16 @@
 var express = require('express');
-var hands = require('../models/hands');
+var Hands = require('../models/hands');
 var router = express.Router();
 var db = require('../db');
 var connection = db.persist();
 var hands = connection.collection('hands');
 
+
+
 router.get('/', function(req, res, next) {
+  console.log('HANDS FROM GAME', hands);
   console.log("USER:", req.user.username);
-  hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
+  hands.find({user: req.user.username}, function(err, data){
     console.log('GAME ROUTE ERROR:', err);
     console.log('Game Route DATA:', data);
     if (data[0]){

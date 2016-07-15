@@ -10,6 +10,8 @@ var hands = connection.collection('hands');
 
 
 
+
+
 router.get('/', function (req, res) {
     res.render('index', { user : req.user, title: "Rock Paper Scissors" });
 });
@@ -23,6 +25,7 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
+    console.log("HANDS FROM INDEX", hands);
     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
         if (err) {
 
