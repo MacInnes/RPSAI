@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 // var monk = require('monk');
 var Hands = require('./models/hands');
-var db;
+
 
 module.exports = {
 	connect: function(){

@@ -12,7 +12,7 @@ var hands = connection.collection('hands');
 router.get('/', function(req, res, next) {
   console.log('HANDS FROM GAME', hands);
   console.log("USER:", req.user.username);
-  hands.find({user: req.user.username}, function(err, data){
+  Hands.find({user: req.user.username}, function(err, data){
     console.log('GAME ROUTE ERROR:', err);
     console.log('Game Route DATA:', data);
     if (data[0]){
@@ -86,7 +86,7 @@ router.post('/', function(req, res){
     $push: {userChoice: req.body.userChoice }
   }, function(){
     // run computer choice logic here and output a JSON ex: {computer choice: "rock"}
-    hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
+    Hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
       if (data[0]){
         var userArray = data[0]["userChoice"];
         var lastChoice = userArray.pop();
@@ -175,7 +175,7 @@ router.post('/', function(req, res){
         winner(lastChoice, cpuChoice[bestChoice]);
         hands.update({user: req.user.username}, {
           $push: {compChoice: cpuChoice[bestChoice], result: result }}, function(){
-            hands.find({user: req.user.username}, {"_id": 0, "result": 1}, function(err, data){
+            Hands.find({user: req.user.username}, {"_id": 0, "result": 1}, function(err, data){
               var totals = data[0]["result"];
               cpuChoice[playerTotal] = 0;
               cpuChoice[computerTotal] = 0;

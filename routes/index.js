@@ -33,7 +33,7 @@ router.post('/register', function(req, res) {
 
         passport.authenticate('local')(req, res, function () {
             hands.insert({user: req.body.username}, function(){
-            res.redirect('/game');
+                res.redirect('/game');
             })
         });
     });
