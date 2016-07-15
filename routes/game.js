@@ -175,7 +175,7 @@ router.post('/', function(req, res){
         winner(lastChoice, cpuChoice[bestChoice]);
         hands.update({user: req.user.username}, {
           $push: {compChoice: cpuChoice[bestChoice], result: result }}, function(){
-            Hands.find({user: req.user.username}, {"_id": 0, "result": 1}, function(err, data){
+            Hands.find({user: req.user.username}, {"_id": 0, "userChoice": 1, "result": 1}, function(err, data){
               var totals = data[0]["result"];
               cpuChoice[playerTotal] = 0;
               cpuChoice[computerTotal] = 0;
