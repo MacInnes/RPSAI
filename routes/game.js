@@ -1,5 +1,5 @@
 var express = require('express');
-var hands = require('../models/hands');
+var Hands = require('../models/hands');
 var router = express.Router();
 var db = require('../db');
 var connection = db.persist();
