@@ -2,13 +2,11 @@ var mongoose = require('mongoose');
 // var monk = require('monk');
 var db;
 
-module.exports = {
-	connect: function(){
-	  mongoose.connect(process.env.MONGODB_URI || 'localhost/hands');
-    db = mongoose.connection;
-	  
-	},
-	get: function(collection){
-	  return db.findOne(collection);
-	}
+function connect(){
+  mongoose.connect(process.env.MONGODB_URI || 'localhost/hands');
+  db = mongoose.connection;
+};
+
+function get(collection){
+  return db.findOne(collection);
 };
