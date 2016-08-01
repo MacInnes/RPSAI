@@ -10,11 +10,7 @@ var hands = connection.collection('hands');
 
 
 router.get('/', function(req, res, next) {
-  console.log('HANDS FROM GAME', hands);
-  console.log("USER:", req.user.username);
   Hands.find({user: req.user.username}, function(err, data){
-    console.log('GAME ROUTE ERROR:', err);
-    console.log('Game Route DATA:', data);
     if (data[0]){
       var totals = data[0]["result"];
       var initialPlayerTotal = 0;
@@ -93,7 +89,6 @@ router.post('/', function(req, res){
         var recentChoices = userArray.slice(-3);
         var choices = [];
         var prevResults = [];
-        console.log("recent choices: " + recentChoices)
         if (userArray.length > 0){
           for (var i = 0; i < userArray.length; i++){
             if (recentChoices[0] === userArray[i] && recentChoices[1] === userArray[i+1] && recentChoices[2] === userArray[i+2] && userArray[i+3] != undefined){
@@ -105,9 +100,7 @@ router.post('/', function(req, res){
             }
           }
         };
-        console.log("results: " + prevResults)
         if (choices.length === 0){
-          console.log("RANDOM CHOICE")
           var random = Math.random();
           if (random < 0.333){
             choices.push("Rock");
@@ -118,7 +111,6 @@ router.post('/', function(req, res){
           }
         }
         
-        console.log(choices);
         var choicesObj = choices.reduce(function(prev, curr){
           if (prev[curr]){
             prev[curr]++;
@@ -128,7 +120,6 @@ router.post('/', function(req, res){
             return prev;
           }
         }, {})
-        console.log(choicesObj);
         var max = 0;
         var choice;
         for (prop in choicesObj){
@@ -196,8 +187,6 @@ router.post('/', function(req, res){
 
 
               var totalChoices = data[0]["userChoice"] || [];
-              console.log('data for TOTAL CHOICES:', data[0]["userChoice"])
-              console.log('TOTAL CHOICES:', totalChoices);
               var rock = 0;
               var paper = 0;
               var scissors = 0;
@@ -226,7 +215,6 @@ router.post('/', function(req, res){
 
         });
       } else {
-        console.log('POST ROUTE ELSE STATEMENT');
         var choices = [];
         var random = Math.random();
         if (random < 0.333){
@@ -295,7 +283,6 @@ router.post('/', function(req, res){
 
 
               var totalChoices = data[0]["userChoice"];
-              console.log('TOTAL CHOICES:', totalChoices);
               var rock = 0;
               var paper = 0;
               var scissors = 0;
