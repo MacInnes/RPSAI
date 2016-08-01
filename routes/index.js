@@ -24,7 +24,6 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-    console.log("HANDS FROM INDEX", hands);
     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
         if (err) {
 
