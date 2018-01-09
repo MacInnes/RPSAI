@@ -40,7 +40,6 @@ rockBtn.addEventListener("click", function(){
       cpuChoice = data.choice;
       playerTotal = data.playerTotal;
       computerTotal = data.computerTotal;
-      computerTotal = data.computerTotal;
       rockPercent = data.rockPercentage;
       paperPercent = data.paperPercentage;
       scissorsPercent = data.scissorsPercentage;
@@ -68,7 +67,6 @@ paperBtn.addEventListener("click", function(){
       console.log(data)
       cpuChoice = data.choice;
       playerTotal = data.playerTotal;
-      computerTotal = data.computerTotal;
       computerTotal = data.computerTotal;
       rockPercent = data.rockPercentage;
       paperPercent = data.paperPercentage;

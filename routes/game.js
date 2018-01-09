@@ -11,7 +11,8 @@ var hands = connection.collection('hands');
 
 router.get('/', function(req, res, next) {
   Hands.find({user: req.user.username}, function(err, data){
-    if (data[0]){
+    console.log("DATA", data);
+    if (data[0].userChoice.length > 0){
       var totals = data[0]["result"];
       var initialPlayerTotal = 0;
       var initialComputerTotal = 0;
@@ -47,7 +48,7 @@ router.get('/', function(req, res, next) {
 
         var tempTotal = initialComputerTotal;
         initialComputerTotal = initialComputerTotal + " (" + (100*(initialComputerTotal/(initialComputerTotal+initialPlayerTotal))).toFixed(0) + "%)";
-        initialPlayerTotal = initialPlayerTotal + " (" + (100*(initialPlayerTotal/(initialPlayerTotal+tempTotal))).toFixed(0) + "%)"
+        initialPlayerTotal = initialPlayerTotal + " (" + (100*(initialPlayerTotal/(initialPlayerTotal+tempTotal))).toFixed(0) + "%)";
       }
       res.render('game', { title: "RPS", 
           user: req.user, 
@@ -65,12 +66,12 @@ router.get('/', function(req, res, next) {
         user: req.user, 
         playerTotal: 0, 
         computerTotal: 0,
-        rockPercent: 0,
-        paperPercent: 0,
-        scissorsPercent: 0,
-        winPercent: 0,
-        lossPercent: 0,
-        tiePercent: 0
+        rockPercent: "0%",
+        paperPercent: "0%",
+        scissorsPercent: "0%",
+        winPercent: "0%",
+        lossPercent: "0%",
+        tiePercent: "0%"
       });
     }
 
